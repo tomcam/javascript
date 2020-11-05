@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dynamically append HTML to a div with Javascript</title>
+	<meta charset="utf-8">
+  <meta name="citation_authors" content="Tom Campbell">
+  <meta name="citation_keywords" content="dynamic html, DOM, code generation">
+</head>
+<body>
+  <div id="demo"></div>
+<script>
+
+// Pass the HTML block element you want append 
+// to a div, along with the ID of that div, 
+// and the HTML is appended to it.
+function appendToDiv(htmlText, div) {
+  // Do nothing if it doesn't have tags.
+  if (!isHTMLBlockElement(htmlText)) {
+    return
+  }
+  // Grab hold of the div to append to.
+  target = document.getElementById(div)
+  target.insertAdjacentHTML('beforeend',htmlText)
+  return
+}
+
+// Returns true if tag is an HTML block element.
+// For example,"<p>hello, world</p>" returns
+// true but "p>hello, world</p>" returns false.
+function isHTMLBlockElement(tag) {
+  regex = RegExp(/<[a-z][\s\S]*>/i)  
+  return regex.test(tag)
+}
+
+// Returns tag type of blockElement, for 
+// example, "p" if blockElement is
+// "<p>hello, world</p>".
+// Assumes blockElement is a valid HTML block
+// element such as <p> or <h2>.
+function getTag(blockElement) {
+  // opening tag
+  return blockElement.match(/\w+/)
+}
+
+// Takes text such as "<h1>Welcome!</h1>" to an actual
+// DOM node.
+function htmlToDOMNode(htmlText) {
+  return document.createRange().createContextualFragment(htmlText)
+}
+
+function test() {
+  tag =" " 
+  while (tag != "") {
+    tag = prompt("HTML to test: ", "<h2>hello, world</h2>")
+    if (isHTMLBlockElement(tag)) {
+      alert('hey, ' + getTag(tag) + ' is a valid block element. Now appending it') 
+      appendToDiv(tag,"demo")
+    } else {
+      alert(tag + ' is NOT a valid block element')
+    }
+  }
+}
+// Arbitrary code can be executed here.
+// It is meant to be called after the HTML 
+// documented has completed loading.
+// This function name is go() but you can name it anything. 
+// Just make sure you use that same name 
+// the name in the call to
+// document.addEventListener()
+function go() {
+  // Prompt user for tags to append
+  test()
+  appendToDiv("<h1>Dynamically add to div</h1>", "demo")
+  appendToDiv("<p>1931 Totally high performance code</p>", "demo")
+  appendToDiv("<strong>Kick arse and take names!</strong>", "demo")
+}
+
+// Ensure document's loaded before running Javascript
+if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+) {
+  go()
+} else {
+  // When the HTML file is completely read int,
+  // call this function. Can be called anything;
+  // here it's just called go()
+  document.addEventListener("DOMContentLoaded", go);
+}
+</script>
+</body>
+</html>
