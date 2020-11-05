@@ -48,6 +48,7 @@ if (
 
 </header>
 <h1>Read a JSON file with Javascript</h1>
+<p>This demo assumes a JSON file named testfile.json in the current directory</p>
 <!-- This div is filled with the file contents on startup -->
 <div id="demo"></div>
 </body>
