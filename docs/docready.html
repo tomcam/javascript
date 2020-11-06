@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang=en>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vanilla Javascript document ready</title>
+</head>
+<body>
+
+<script>
+
+// Gets called when the HTML document has finally
+// been loaded. Function doesn't need to be named go().
+function go() {
+  console.log('This document is ready')
+  target = document.getElementById('demo')
+  target.innerHTML = 'Ready!'
+}
+
+// THIS IS WHY YOU'RE HERE
+// Ensure document's loaded before running Javascript
+if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+) {
+  go()
+} else {
+  // When the HTML file is completely read in,
+  // call this function. Can be called anything;
+  // here it's just called go()
+  document.addEventListener("DOMContentLoaded", go);
+}
+</script>
+
+</header>
+<h1>Simple vanilla document ready code</h1>
+<div id="demo"></div>
+</body>
+</html>
